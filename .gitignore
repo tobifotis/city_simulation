@@ -1,0 +1,12 @@
+# Object files
+*.o
+*.obj
+
+# Executables
+*.exe
+*.out
+
+# Build/Debug folders
+/build
+/Debug
+/Release
