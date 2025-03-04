@@ -1,6 +1,7 @@
 #include <iostream>
-#include <fstream>
+#include "config.h"
 
+#include <fstream>
 using namespace std;
 
 int main()
@@ -12,25 +13,11 @@ int main()
     cout << "Hey user, kindly enter the file name: ";
     cin >> fileName;
 
-    // Create input file stream
-    ifstream file;
+    string regionLayout = getRegionLayout(fileName);
+    int timeLimit = getTimeLimit(fileName);
+    int refreshRate = getRefreshRate(fileName);
 
-    string line;
-
-    // Attempt to open the file
-    file.open(fileName);
-
-    if (file.is_open())
-    {
-        while (getline(file, line))
-        {
-            cout << line << endl;
-        }
-
-        file.close();
-    }
-    else
-    {
-        cout << "Error opening the file!" << endl;
-    }
+    cout << regionLayout << endl;
+    cout << timeLimit << endl;
+    cout << refreshRate << endl;
 }
