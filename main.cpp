@@ -1,7 +1,9 @@
 #include <iostream>
-#include "config.h"
+#include <string>
 
-#include <fstream>
+#include "config.h"
+#include "region.h"
+
 using namespace std;
 
 int main()
@@ -17,7 +19,9 @@ int main()
     int timeLimit = getTimeLimit(fileName);
     int refreshRate = getRefreshRate(fileName);
 
-    cout << regionLayout << endl;
-    cout << timeLimit << endl;
-    cout << refreshRate << endl;
+    cout << "Region Layout: " << regionLayout << endl;
+    cout << "Time Limit: " << timeLimit << endl;
+    cout << "Refresh Rate: " << refreshRate << "\n\n";
+
+    displayInitialRegion();
 }
