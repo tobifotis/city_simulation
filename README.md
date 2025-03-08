@@ -12,8 +12,9 @@ impacts development.
 <br> 
 
 ## Project Structure
+- config1.txt          --> Configuration file.
+- config.cpp/h         --> Implement functions to read and parse configuration file values (region layout, time limit, refresh rate).
 - commercial.cpp/.h    --> Commercial zone logic.
-- config1.txt          -->  Configuration file.
 - industrial.cpp/.h    --> Industrial zone logic.
 - main.cpp             --> Contains the main() function.
 - region1.csv          --> Region layout file
