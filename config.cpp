@@ -1,75 +1,56 @@
 #include "config.h"
 
-string LoadConfig::getRegionLayout() const
+
+bool LoadConfig::readConfig(const string &m_configFileName)
 {
     // Attempt to open file => [config1.txt]
-    ifstream file(m_configFile);
+    ifstream file(m_configFileName);
 
     if (!file) // If the file does not exist
     {
-        cout << "\nError: Unable to open " << m_configFile << endl;
+        cout << "\nError: Unable to open " << m_configFileName << endl;
         cout << "Ensure you typed in 'config1.txt' correctly.\n\n";
-        return "";
+        return false;
     }
 
     string line;
+
     while (getline(file, line))
     {
         if (line.find("Region") == 0) // If the line starts with "Region"
         {
             // Extract substring starting at index 14 to the end of the string
-            return line.substr(14);
+            m_regionFileName = line.substr(14);
+        }
+        else if (line.find("Time") == 0) // If the line starts with "Time"
+        {
+            // Extract substring starting at index 11 to the end of the string
+            m_maxTimeSteps = stoi(line.substr(11));
+        }
+        if (line.find("Refresh") == 0) // If the line starts with "Refresh"
+        {
+            // Extract substring starting at index 13 to the end of the string
+            m_refreshRate = stoi(line.substr(13));
         }
     }
 
-    return "";
-}
-
-LoadConfig::LoadConfig(const string &file) : m_configFile(file)
-{
-    getGrid();
-}
-
-// This function will read and display content of 'config1.txt'
-void LoadConfig::displayConfiguration() const
-{
-    // Attempt to open file => [config1.txt]
-    ifstream file(m_configFile);
-
-    if (!file) // If the file does not exist
-    {
-        cout << "\nError: Unable to open " << m_configFile << endl;
-        cout << "Ensure you typed in 'config1.txt' correctly.\n\n";
-        return;
-    }
-
-    // Read and display the file => [config1.txt]
-    string line;
-    while (getline(file, line))
-    {
-        cout << line << endl;
-    }
-
-    // Don.t forget to close the file
     file.close();
+    return true;
 }
 
-// This function will store a vector of our csv file
-void LoadConfig::getGrid()
-{
-    // Get the csv filename
-    string regionFile = getRegionLayout();
 
+bool LoadConfig::readRegionLayout(const string &m_regionFileName)
+{
     // Attempt to open file => [region1.csv]
-    ifstream file(regionFile);
+    ifstream file(m_regionFileName);
 
     if (!file) // If the file does not exist
     {
-        cout << "\nError: Unable to open " << regionFile << endl;
-        return;
+        cout << "\nError: Unable to open " << m_regionFileName << endl;
+        return false;
     }
 
-    grid.clear();
+    regionLayout.clear();
     string line;
 
     while (getline(file, line))
@@ -92,22 +73,23 @@ void LoadConfig::getGrid()
                 row.push_back(cell[0]);
             }
         }
-        grid.push_back(row);
+        regionLayout.push_back(row);
     }
 
     file.close();
+    return true;
 }
 
-void LoadConfig::displayGrid() const
-{
-    cout << endl;
-    for (const auto &row : grid)
-    {
-        for (const auto &c : row)
-        {
-            cout << setw(3) << c << ' ';
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
+// void LoadConfig::displayGrid() const
+// {
+//     cout << endl;
+//     for (const auto &row : grid)
+//     {
+//         for (const auto &c : row)
+//         {
+//             cout << setw(3) << c << ' ';
+//         }
+//         cout << endl;
+//     }
+//     cout << endl;
+// }

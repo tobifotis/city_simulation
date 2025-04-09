@@ -20,8 +20,6 @@ int main()
   cout << "\nKindly enter file name: ";
   cin >> fileName;
 
-  LoadConfig config(fileName);
-  config.displayGrid();
 
   return 0;
 }

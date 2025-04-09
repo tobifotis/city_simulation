@@ -13,21 +13,19 @@ using namespace std;
 // handle configuration file
 class LoadConfig
 {
-private:
-    string m_configFile;
-    vector<vector<char>> grid;
-
-    string getRegionLayout() const;
-
 public:
-    // Constructor
-    LoadConfig(const string &file);
+    string m_configFileName; // config1.txt
 
-    void displayConfiguration() const;
+    string m_regionFileName; // region1.csv
+    int m_maxTimeSteps;      // 20
+    int m_refreshRate;       // 1
 
-    void getGrid();
+    vector<vector<char>> regionLayout; // Grid
 
-    void displayGrid() const;
+    bool readConfig(const string &m_configFileName);
+    bool readRegionLayout(const string &m_regionFileName);
+
+    // void displayGrid() const;
 };
 
 #endif
