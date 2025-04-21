@@ -1,7 +1,7 @@
 #include "config.h"
 
-
-bool LoadConfig::readConfig(const string &m_configFileName)
+// Should return region1.csv
+string LoadConfig::getRegionFileName(const string &m_configFileName)
 {
     // Attempt to open file => [config1.txt]
     ifstream file(m_configFileName);
@@ -10,7 +10,6 @@ bool LoadConfig::readConfig(const string &m_configFileName)
     {
         cout << "\nError: Unable to open " << m_configFileName << endl;
         cout << "Ensure you typed in 'config1.txt' correctly.\n\n";
-        return false;
     }
 
     string line;
@@ -22,11 +21,55 @@ bool LoadConfig::readConfig(const string &m_configFileName)
             // Extract substring starting at index 14 to the end of the string
             m_regionFileName = line.substr(14);
         }
-        else if (line.find("Time") == 0) // If the line starts with "Time"
+    }
+
+    file.close();
+    return m_regionFileName;
+}
+
+// Should return 20
+int LoadConfig::getMaxTimeSteps(const string &m_configFileName)
+{
+    // Attempt to open file => [config1.txt]
+    ifstream file(m_configFileName);
+
+    if (!file) // If the file does not exist
+    {
+        cout << "\nError: Unable to open " << m_configFileName << endl;
+        cout << "Ensure you typed in 'config1.txt' correctly.\n\n";
+    }
+
+    string line;
+
+    while (getline(file, line))
+    {
+        if (line.find("Time") == 0) // If the line starts with "Time"
         {
             // Extract substring starting at index 11 to the end of the string
             m_maxTimeSteps = stoi(line.substr(11));
         }
+    }
+
+    file.close();
+    return m_maxTimeSteps;
+}
+
+// Should return 1
+int LoadConfig::getRefreshRate(const string &m_configFileName)
+{
+    // Attempt to open file => [config1.txt]
+    ifstream file(m_configFileName);
+
+    if (!file) // If the file does not exist
+    {
+        cout << "\nError: Unable to open " << m_configFileName << endl;
+        cout << "Ensure you typed in 'config1.txt' correctly.\n\n";
+    }
+
+    string line;
+
+    while (getline(file, line))
+    {
         if (line.find("Refresh") == 0) // If the line starts with "Refresh"
         {
             // Extract substring starting at index 13 to the end of the string
@@ -35,11 +78,11 @@ bool LoadConfig::readConfig(const string &m_configFileName)
     }
 
     file.close();
-    return true;
+    return m_refreshRate;
 }
 
-
-bool LoadConfig::readRegionLayout(const string &m_regionFileName)
+// Returns the Grid
+vector<vector<char>> LoadConfig::getRegionLayout(const string &m_configFileName)
 {
     // Attempt to open file => [region1.csv]
     ifstream file(m_regionFileName);
@@ -47,7 +90,7 @@ bool LoadConfig::readRegionLayout(const string &m_regionFileName)
     if (!file) // If the file does not exist
     {
         cout << "\nError: Unable to open " << m_regionFileName << endl;
-        return false;
+        return {};
     }
 
     regionLayout.clear();
@@ -77,19 +120,5 @@ bool LoadConfig::readRegionLayout(const string &m_regionFileName)
     }
 
     file.close();
-    return true;
+    return regionLayout;
 }
-
-// void LoadConfig::displayGrid() const
-// {
-//     cout << endl;
-//     for (const auto &row : grid)
-//     {
-//         for (const auto &c : row)
-//         {
-//             cout << setw(3) << c << ' ';
-//         }
-//         cout << endl;
-//     }
-//     cout << endl;
-// }

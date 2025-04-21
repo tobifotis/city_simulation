@@ -20,12 +20,13 @@ public:
     int m_maxTimeSteps;      // 20
     int m_refreshRate;       // 1
 
+    string getRegionFileName(const string &m_configFileName);
+    int getMaxTimeSteps(const string &m_configFileName);
+    int getRefreshRate(const string &m_configFileName);
+
     vector<vector<char>> regionLayout; // Grid
 
-    bool readConfig(const string &m_configFileName);
-    bool readRegionLayout(const string &m_regionFileName);
-
-    // void displayGrid() const;
+    vector<vector<char>> getRegionLayout(const string &m_configFileName);
 };
 
 #endif
