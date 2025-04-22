@@ -19,11 +19,6 @@ void Simulation::simulateRegion(const vector<vector<char>> &region)
         cout << "Available goods: 0\n";
         cout << "Current Region State: \n";
 
-        for (const auto &row : region)
-        {
-            for (char c : row)
-                cout << setw(3) << c << ' ';
-            cout << '\n';
-        }
+        printRegion(region);
     }
 }
