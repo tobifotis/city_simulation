@@ -1,21 +1,32 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
-#include "config.h"
+#include "cell.h"
+#include <vector>
+#include <iostream>
+
+using namespace std;
 
 class Simulation
 {
+private:
+    int maxTimeSteps;
+    int refreshRate;
+    vector<vector<Cell>> region;
+
+    int availableWorkers;
+    int availableGoods;
+
 public:
-    LoadConfig config;
+    // Constructor
+    Simulation(int maxSteps, int refresh, const vector<vector<Cell>> &initialRegion);
 
-    string regionFileName = config.getRegionFileName("config1.txt");
-    int maxTimeSteps = config.getMaxTimeSteps("config1.txt");
-    int refreshRate = config.getRefreshRate("config1.txt");
-
-    vector<vector<char>> region = config.getRegionLayout("config1.txt");
-
-    void printRegion(const vector<vector<char>> &region);
-    void simulateRegion(const vector<vector<char>> &region);
+    void simulateRegion();
+    void printRegion() const;
+    bool applyGrowthStep();
+    void spreadPollution();
+    bool areEqual(const vector<vector<Cell>> &a, const vector<vector<Cell>> &b);
+    void analyzeRegion() const;
 };
 
 #endif
