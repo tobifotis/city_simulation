@@ -11,7 +11,7 @@ impacts development. The core processes include constructing these zones, managi
 
 <br> 
 
-![Adventure Image](sample_output.png)
+![Adventure Image](sample_output33.png)
 
 <br> 
 
