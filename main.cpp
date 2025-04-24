@@ -1,4 +1,5 @@
 #include "config.h"
+#include "simulation.h"
 
 #include <iostream>
 #include <fstream>
@@ -7,10 +8,14 @@
 #include <vector>
 #include <iomanip>
 
+#define BOLD "\033[1m"
+#define RESET "\033[0m"
+#define CYAN "\033[36m"
+#define BLUE "\033[34m"
+
 using namespace std;
 
 void welcomeUser();
-void printInitialRegion(const vector<vector<char>> &region);
 
 int main()
 {
@@ -23,25 +28,21 @@ int main()
   cin >> fileName;
 
   LoadConfig config;
-  string regionFileName = config.getRegionFileName(fileName);
-  int maxTimeSteps = config.getMaxTimeSteps(fileName);
+  string regionFile = config.getRegionFileName(fileName);
+  int maxSteps = config.getMaxTimeSteps(fileName);
   int refreshRate = config.getRefreshRate(fileName);
 
-  vector<vector<char>> region = config.getRegionLayout(fileName);
+  vector<vector<Cell>> region = config.getRegionLayout(fileName);
 
-  cout << "\n"
-       << regionFileName << "\n";
-  cout << maxTimeSteps << "\n";
-  cout << refreshRate << "\n";
-
-  printInitialRegion(region);
+  Simulation sim(maxSteps, refreshRate, region);
+  sim.simulateRegion();
 
   return 0;
 }
 
 void welcomeUser()
 {
-  cout << R"(
+  cout << CYAN << R"(
     ________       ___      _____ ______           ________      ___      _________     ___    ___ 
    |\   ____\     |\  \    |\   _ \  _   \        |\   ____\    |\  \    |\___   ___\  |\  \  /  /|
    \ \  \___|_    \ \  \   \ \  \\\__\ \  \       \ \  \___|    \ \  \   \|___ \  \_|  \ \  \/  / /
@@ -51,24 +52,11 @@ void welcomeUser()
       |\_________\    \|__|    \|__|     \|__|        \|_______|    \|__|        \|__||\___/ /     
       \|_________|                                                                    \|___|/      
        )"
-       << "\n";
+       << RESET << "\n";
 
-  cout << "\n\t\t\t\t\t***************************\n";
-  cout << "\t\t\t\t\t    WELCOME TO SIM CITY  \n";
-  cout << "\t\t\t\t\t***************************\n";
-}
-
-void printInitialRegion(const vector<vector<char>> &region)
-{
-  cout << "\n======================\n";
-  cout << "Initial Region Layout:\n";
-  cout << "======================\n";
-  for (const auto &row : region)
-  {
-    for (char c : row)
-      cout << setw(3) << c << ' ';
-    cout << '\n';
-  }
-
-  cout << endl;
+  cout << "\n\t\t\t\t============================================\n\n";
+  cout << BOLD << BLUE ;
+  cout << "\t\t\t\t    W E L C O M E   T O   S I M   C I T Y  \n\n";
+  cout << RESET;
+  cout << "\t\t\t\t============================================\n";
 }
